@@ -1,13 +1,16 @@
-package br.com.murylomarques.auth.sistema_autenticacao_api.security; // <-- VERIFIQUE ESTA LINHA!
+package br.com.murylomarques.auth.sistema_autenticacao_api.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer; // Importe esta classe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
 
 @Configuration
 @EnableWebSecurity
@@ -17,13 +20,21 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.ignoringRequestMatchers(toH2Console()))
+                // 1. Desabilita COMPLETAMENTE a proteção CSRF para nossa API stateless
+                .csrf(AbstractHttpConfigurer::disable)
+
+                // 2. Define as regras de autorização
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(toH2Console()).permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
+
+                // 3. Configuração para permitir o frame do H2 Console (isso pode ser removido agora que o CSRF está desabilitado, mas não faz mal deixar)
                 .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
 
         return http.build();

@@ -13,8 +13,8 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor // Construtor sem argumentos (obrigatório pelo JPA)
+@AllArgsConstructor // Construtor com todos os argumentos
 public class User {
 
     @Id
@@ -30,15 +30,19 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    // --- INÍCIO DA MODIFICAÇÃO ---
-
-    @ManyToMany(fetch = FetchType.EAGER) // Carrega os papéis junto com o usuário
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_roles", // Nome da tabela de junção
-            joinColumns = @JoinColumn(name = "user_id"), // Chave estrangeira para User
-            inverseJoinColumns = @JoinColumn(name = "role_id") // Chave estrangeira para Role
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
 
-    // --- FIM DA MODIFICAÇÃO ---
+    // --- CONSTRUTOR CORRIGIDO ADICIONADO AQUI ---
+    // Este construtor será usado especificamente para o registro de novos usuários.
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 }
