@@ -15,7 +15,7 @@ Este projeto é o back-end de um sistema full-stack. O front-end em React pode s
 - **Java 17**: Versão LTS mais recente do Java, garantindo performance e segurança.
 - **Spring Boot 3+**: Framework principal para a criação da aplicação.
 - **Spring Security**: Para a camada de segurança e controle de acesso.
-- **JWT (JSON Web Token)**: Para a autenticação stateless da API.
+- **JWT (JSON Web Token)**: Para a autenticação stateless da API, utilizando a biblioteca `jjwt`.
 - **Spring Data JPA**: Para a persistência de dados de forma simplificada.
 - **Maven**: Gerenciador de dependências do projeto.
 - **H2 Database**: Banco de dados em memória para o ambiente de desenvolvimento.
@@ -23,13 +23,13 @@ Este projeto é o back-end de um sistema full-stack. O front-end em React pode s
 
 ---
 
-## ✅ Funcionalidades Planejadas
+## ✅ Funcionalidades Implementadas e Planejadas
 
-- [ ] **Endpoints de Autenticação**:
-    - [ ] `POST /auth/register`: Registro de novos usuários.
-    - [ ] `POST /auth/login`: Login e geração de token JWT.
+- [x] **Endpoints de Autenticação**:
+    - [x] `POST /api/auth/signup`: Registro de novos usuários com validação e criptografia de senha (BCrypt).
+    - [x] `POST /api/auth/signin`: Login de usuários e geração de token de acesso JWT.
 - [ ] **Controle de Acesso por Papéis**:
-    - [ ] Distinção entre usuários comuns (`ROLE_USER`) e administradores (`ROLE_ADMIN`).
+    - [x] Distinção entre usuários comuns (`ROLE_USER`) e administradores (`ROLE_ADMIN`) no banco de dados.
     - [ ] Proteção de endpoints específicos por papel.
 - [ ] **Recuperação de Senha**:
     - [ ] `POST /auth/forgot-password`: Envio de e-mail com token de recuperação.
