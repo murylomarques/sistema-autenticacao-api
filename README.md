@@ -28,9 +28,9 @@ Este projeto é o back-end de um sistema full-stack. O front-end em React pode s
 - [x] **Endpoints de Autenticação**:
     - [x] `POST /api/auth/signup`: Registro de novos usuários com validação e criptografia de senha (BCrypt).
     - [x] `POST /api/auth/signin`: Login de usuários e geração de token de acesso JWT.
-- [ ] **Controle de Acesso por Papéis**:
+- [x] **Controle de Acesso por Papéis**:
     - [x] Distinção entre usuários comuns (`ROLE_USER`) e administradores (`ROLE_ADMIN`) no banco de dados.
-    - [ ] Proteção de endpoints específicos por papel.
+    - [x] Proteção de endpoints específicos por papel (`@PreAuthorize`).
 - [ ] **Recuperação de Senha**:
     - [ ] `POST /auth/forgot-password`: Envio de e-mail com token de recuperação.
     - [ ] `POST /auth/reset-password`: Redefinição da senha com o token.
