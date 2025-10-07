@@ -4,7 +4,7 @@
 
 ## 📖 Sobre o Projeto
 
-API RESTful completa para autenticação e autorização de usuários, desenvolvida com o ecossistema Spring. O objetivo deste projeto é demonstrar habilidades em segurança de APIs com JWT, boas práticas de desenvolvimento back-end, gerenciamento de acesso por papéis (Roles) e funcionalidades essenciais como recuperação de senha.
+API RESTful completa para autenticação e autorização de usuários, desenvolvida com o ecossistema Spring. O objetivo deste projeto é demonstrar habilidades em segurança de APIs com JWT, boas práticas de desenvolvimento back-end, gerenciamento de acesso por papéis (Roles), funcionalidades essenciais como recuperação de senha e a garantia de qualidade através de testes unitários.
 
 Este projeto é o back-end de um sistema full-stack. O front-end em React pode ser encontrado [aqui](link-para-seu-futuro-repo-do-front).
 
@@ -21,6 +21,7 @@ Este projeto é o back-end de um sistema full-stack. O front-end em React pode s
 - **Maven**: Gerenciador de dependências do projeto.
 - **H2 Database**: Banco de dados em memória para o ambiente de desenvolvimento.
 - **Lombok**: Para reduzir a verbosidade do código Java.
+- **JUnit 5 & Mockito**: Para a implementação de testes unitários robustos, garantindo a qualidade do código.
 
 ---
 
@@ -35,8 +36,9 @@ Este projeto é o back-end de um sistema full-stack. O front-end em React pode s
 - [x] **Recuperação de Senha Completa**:
     - [x] `POST /api/auth/forgot-password`: Envio de e-mail com token de recuperação de uso único.
     - [x] `POST /api/auth/reset-password`: Redefinição da senha com validação de token e tempo de expiração.
-- [ ] **Testes Unitários**:
-    - [ ] Cobertura de testes para as principais regras de negócio.
+- [x] **Testes Unitários**:
+    - [x] A camada de serviço (`Service Layer`) possui cobertura de testes unitários para garantir que a lógica de negócio opere corretamente, de forma isolada.
+    - [x] Utilização de **Mockito** para simular (`mock`) as dependências externas (como `UserRepository` e `EmailService`), permitindo que a lógica seja testada sem a necessidade de um banco de dados ou servidor de e-mail real.
 
 ---
 
@@ -54,8 +56,8 @@ Para executar este projeto localmente, siga os passos abaixo.
 ### 1. Clone o Repositório
 
 ```bash
-git clone https://github.com/murylomarques/sistema-autenticacao-api.git
-cd sistema-autenticacao-api
+git clone https://github.com/murylomarques/sistema-autenticação-api.git
+cd sistema-autenticação-api
 ```
 
 ### 2. Configure as Variáveis de Ambiente
@@ -72,15 +74,21 @@ spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
 ```
 
-### 3. Execute a Aplicação
+### 3. Execute a Aplicação e os Testes
 
-Use o Maven para compilar e iniciar a aplicação:
+**Para iniciar a aplicação:**
 
 ```bash
 mvn spring-boot:run
 ```
+A API estará disponível em `http://localhost:8080`.
 
-A API estará disponível em `http://localhost:8080`. O console do banco de dados H2 pode ser acessado em `http://localhost:8080/h2-console` (use a JDBC URL: `jdbc:h2:mem:authdb`).
+**Para rodar os testes unitários:**
+
+```bash
+mvn test
+```
+Este comando executará todos os testes do projeto e mostrará um `BUILD SUCCESS` se todos passarem.
 
 ---
 
