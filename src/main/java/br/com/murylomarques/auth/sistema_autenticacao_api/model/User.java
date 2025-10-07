@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor // Construtor com todos os argumentos
 public class User {
 
+    private LocalDateTime resetPasswordTokenExpiry;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,6 +31,11 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(name = "reset_password_token")
+    private String resetPasswordToken;
+
+    @Column(name = "reset_password_token_expiry")
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
