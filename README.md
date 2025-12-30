@@ -1,99 +1,147 @@
-# Sistema de Autenticação - API (Back-end)
+🔐 Enterprise Authentication & Authorization API
 
-![Status](https://img.shields.io/badge/STATUS-FUNCIONAL-brightgreen)
+STATUS: PRODUCTION_READY
+Java: 17
+Spring Boot: 3.x
+Security: Spring Security + JWT
 
-## 📖 Sobre o Projeto
+API de autenticação e autorização desenvolvida em Java 17 com Spring Boot, simulando um serviço corporativo reutilizável para aplicações web e sistemas distribuídos.
+O foco do projeto é segurança, organização de código, boas práticas e prontidão para ambiente real.
 
-API RESTful completa para autenticação e autorização de usuários, desenvolvida com o ecossistema Spring. O objetivo deste projeto é demonstrar habilidades em segurança de APIs com JWT, boas práticas de desenvolvimento back-end, gerenciamento de acesso por papéis (Roles), funcionalidades essenciais como recuperação de senha e a garantia de qualidade através de testes unitários.
+────────────────────────────────────────
+🎯 CONTEXTO E OBJETIVO
+────────────────────────────────────────
+Em aplicações modernas, a autenticação e o controle de acesso são responsabilidades críticas.
+Este projeto representa um Auth Service independente, que poderia ser utilizado por múltiplas aplicações (frontends web, mobile ou outros serviços backend).
 
-Este projeto é o back-end de um sistema full-stack. O front-end em React pode ser encontrado [aqui](link-para-seu-futuro-repo-do-front).
+O sistema foi desenvolvido seguindo padrões amplamente utilizados em empresas, como:
+- Autenticação stateless com JWT
+- Separação clara de responsabilidades (Controller / Service / Repository)
+- Controle de acesso baseado em papéis (RBAC)
+- Código testável e manutenível
 
----
+────────────────────────────────────────
+🏗️ ARQUITETURA GERAL
+────────────────────────────────────────
+- API RESTful
+- Arquitetura em camadas
+- Autenticação desacoplada do cliente
+- Persistência via JPA/Hibernate
+- Segurança centralizada via Spring Security
 
-## 🛠️ Tecnologias Utilizadas
+Este projeto não é um CRUD genérico, mas um serviço focado em segurança e identidade.
 
-- **Java 17**: Versão LTS do Java, garantindo performance e segurança.
-- **Spring Boot 3+**: Framework principal para a criação da aplicação.
-- **Spring Security**: Para a camada de segurança e controle de acesso.
-- **JWT (JSON Web Token)**: Para a autenticação stateless da API, utilizando a biblioteca `jjwt`.
-- **Spring Data JPA**: Para a persistência de dados de forma simplificada.
-- **Spring Boot Starter Mail**: Para o envio de e-mails.
-- **Maven**: Gerenciador de dependências do projeto.
-- **H2 Database**: Banco de dados em memória para o ambiente de desenvolvimento.
-- **Lombok**: Para reduzir a verbosidade do código Java.
-- **JUnit 5 & Mockito**: Para a implementação de testes unitários robustos, garantindo a qualidade do código.
+────────────────────────────────────────
+🛠️ STACK TECNOLÓGICA
+────────────────────────────────────────
 
----
+Backend:
+- Java 17 (LTS)
+- Spring Boot 3
+- Spring Security
+- Spring Data JPA (Hibernate)
+- JWT (JSON Web Token)
+- Bean Validation
+- BCrypt
 
-## ✅ Funcionalidades Implementadas
+Infraestrutura & Qualidade:
+- Maven
+- H2 Database (ambiente local)
+- JUnit 5
+- Mockito
+- Spring Boot Starter Mail (SMTP)
 
-- [x] **Endpoints de Autenticação**:
-    - [x] `POST /api/auth/signup`: Registro de novos usuários com validação de dados e criptografia de senha (BCrypt).
-    - [x] `POST /api/auth/signin`: Login de usuários e geração de token de acesso JWT.
-- [x] **Controle de Acesso por Papéis**:
-    - [x] Distinção entre usuários comuns (`ROLE_USER`) e administradores (`ROLE_ADMIN`).
-    - [x] Proteção de endpoints específicos por papel utilizando `@PreAuthorize`.
-- [x] **Recuperação de Senha Completa**:
-    - [x] `POST /api/auth/forgot-password`: Envio de e-mail com token de recuperação de uso único.
-    - [x] `POST /api/auth/reset-password`: Redefinição da senha com validação de token e tempo de expiração.
-- [x] **Testes Unitários**:
-    - [x] A camada de serviço (`Service Layer`) possui cobertura de testes unitários para garantir que a lógica de negócio opere corretamente, de forma isolada.
-    - [x] Utilização de **Mockito** para simular (`mock`) as dependências externas (como `UserRepository` e `EmailService`), permitindo que a lógica seja testada sem a necessidade de um banco de dados ou servidor de e-mail real.
+────────────────────────────────────────
+🔑 FUNCIONALIDADES
+────────────────────────────────────────
 
----
+Autenticação:
+- POST /api/auth/signup
+  - Cadastro de usuários
+  - Validação de dados
+  - Criptografia de senha com BCrypt
 
-## 🚀 Como Executar o Projeto
+- POST /api/auth/signin
+  - Login
+  - Geração de token JWT
+  - Autenticação stateless
 
-Para executar este projeto localmente, siga os passos abaixo.
+Autorização (RBAC):
+- Papéis:
+  - ROLE_USER
+  - ROLE_ADMIN
+- Proteção de endpoints com:
+  - @PreAuthorize
+  - Configuração centralizada de segurança
 
-### Pré-requisitos
+Recuperação de Senha:
+- POST /api/auth/forgot-password
+  - Envio de e-mail com token de uso único
+  - Token com tempo de expiração
 
--   [Git](https://git-scm.com/)
--   [Java JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
--   [Apache Maven](https://maven.apache.org/download.cgi)
--   Uma conta Gmail com uma **Senha de App** gerada (para a funcionalidade de envio de e-mail).
+- POST /api/auth/reset-password
+  - Validação do token
+  - Atualização segura da senha
 
-### 1. Clone o Repositório
+Testes Automatizados:
+- Testes unitários na Service Layer
+- Uso de Mockito para mockar:
+  - Repositórios
+  - Serviços externos (e-mail)
+- Isolamento da lógica de negócio
 
-```bash
-git clone https://github.com/murylomarques/sistema-autenticação-api.git
-cd sistema-autenticação-api
-```
+────────────────────────────────────────
+🚀 EXECUTANDO O PROJETO LOCALMENTE
+────────────────────────────────────────
 
-### 2. Configure as Variáveis de Ambiente
+Pré-requisitos:
+- Java 17
+- Maven
+- Git
+- Conta Gmail com Senha de App (SMTP)
 
-O passo mais importante é configurar suas credenciais de e-mail. Abra o arquivo `src/main/resources/application.properties` e edite as seguintes linhas com suas informações:
+1) Clonar o repositório:
+git clone https://github.com/murylomarques/sistema-autenticacao-api.git
+cd sistema-autenticacao-api
 
-```properties
-# CONFIGURAÇÕES DE E-MAIL (SMTP)
+2) Configurar variáveis de ambiente:
+Editar o arquivo src/main/resources/application.properties:
+
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
 spring.mail.username=seu-email@gmail.com
-spring.mail.password=sua-senha-de-app-de-16-digitos
+spring.mail.password=sua-senha-de-app
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
-```
 
-### 3. Execute a Aplicação e os Testes
-
-**Para iniciar a aplicação:**
-
-```bash
+3) Executar a aplicação:
 mvn spring-boot:run
-```
-A API estará disponível em `http://localhost:8080`.
 
-**Para rodar os testes unitários:**
+API disponível em:
+http://localhost:8080
 
-```bash
+4) Executar testes:
 mvn test
-```
-Este comando executará todos os testes do projeto e mostrará um `BUILD SUCCESS` se todos passarem.
 
----
+────────────────────────────────────────
+✨ DEMONSTRAÇÃO
+────────────────────────────────────────
+Exemplo real do e-mail de recuperação de senha enviado pela aplicação:
+assets/email-recuperacao-senha.png
 
-## ✨ Demonstração
+────────────────────────────────────────
+📌 ROADMAP (PRÓXIMOS PASSOS)
+────────────────────────────────────────
+- Docker + Docker Compose
+- Swagger / OpenAPI
+- Migrações com Flyway
+- Refresh Token
+- Rate Limiting
+- Deploy em Cloud (AWS / Render)
 
-Abaixo, um exemplo do e-mail de recuperação de senha enviado pela aplicação, confirmando que a integração com o servidor SMTP está funcionando.
+────────────────────────────────────────
+👨‍💻 AUTOR
+────────────────────────────────────────
+Desenvolvido por Murylo Marques
 
-![E-mail de Recuperação de Senha](assets/email-recuperacao-senha.png)
+Projeto focado em Backend Java, segurança e boas práticas corporativas.
