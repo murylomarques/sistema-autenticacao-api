@@ -1,147 +1,125 @@
-🔐 Enterprise Authentication & Authorization API
+# 🔐 Enterprise Authentication & Authorization API
 
-STATUS: PRODUCTION_READY
-Java: 17
-Spring Boot: 3.x
-Security: Spring Security + JWT
+![Status](https://img.shields.io/badge/STATUS-PRODUCTION_READY-brightgreen)
+![Java](https://img.shields.io/badge/Java-17-blue)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen)
+![Spring Security](https://img.shields.io/badge/Spring%20Security-JWT-orange)
 
-API de autenticação e autorização desenvolvida em Java 17 com Spring Boot, simulando um serviço corporativo reutilizável para aplicações web e sistemas distribuídos.
-O foco do projeto é segurança, organização de código, boas práticas e prontidão para ambiente real.
+API de autenticação e autorização desenvolvida em **Java 17 com Spring Boot**, projetada para **atuar como um serviço corporativo reutilizável** para aplicações web e sistemas distribuídos. O foco principal do projeto é a **segurança, a organização de código, as boas práticas de desenvolvimento e a prontidão para um ambiente de produção**.
 
-────────────────────────────────────────
-🎯 CONTEXTO E OBJETIVO
-────────────────────────────────────────
-Em aplicações modernas, a autenticação e o controle de acesso são responsabilidades críticas.
-Este projeto representa um Auth Service independente, que poderia ser utilizado por múltiplas aplicações (frontends web, mobile ou outros serviços backend).
+---
 
-O sistema foi desenvolvido seguindo padrões amplamente utilizados em empresas, como:
-- Autenticação stateless com JWT
-- Separação clara de responsabilidades (Controller / Service / Repository)
-- Controle de acesso baseado em papéis (RBAC)
-- Código testável e manutenível
+## 🎯 Contexto e Objetivo
 
-────────────────────────────────────────
-🏗️ ARQUITETURA GERAL
-────────────────────────────────────────
-- API RESTful
-- Arquitetura em camadas
-- Autenticação desacoplada do cliente
-- Persistência via JPA/Hibernate
-- Segurança centralizada via Spring Security
+Em um ecossistema de aplicações modernas, a autenticação e o controle de acesso são responsabilidades críticas e complexas. Este projeto implementa um **serviço de autenticação (Auth Service) independente**, que pode ser consumido por múltiplos clientes, como front-ends web, aplicativos mobile ou outros serviços de backend. Esse tipo de arquitetura é comum em ambientes baseados em **microsserviços e sistemas distribuídos**.
 
-Este projeto não é um CRUD genérico, mas um serviço focado em segurança e identidade.
+O sistema foi desenvolvido seguindo padrões amplamente adotados no mercado, como:
+-   **Autenticação Stateless:** Utilização de JSON Web Tokens (JWT) para garantir que o servidor não precise armazenar o estado da sessão.
+-   **Separação de Responsabilidades:** Arquitetura em camadas (Controller, Service, Repository) para um código mais limpo e manutenível.
+-   **Controle de Acesso Baseado em Papéis (RBAC):** Gerenciamento de permissões através de papéis (roles) para proteger os endpoints da API.
+-   **Código Testável e Manutenível:** Foco em testes unitários para garantir a qualidade e a confiabilidade da lógica de negócio.
 
-────────────────────────────────────────
-🛠️ STACK TECNOLÓGICA
-────────────────────────────────────────
+---
 
-Backend:
-- Java 17 (LTS)
-- Spring Boot 3
-- Spring Security
-- Spring Data JPA (Hibernate)
-- JWT (JSON Web Token)
-- Bean Validation
-- BCrypt
+## 🏗️ Arquitetura Geral
 
-Infraestrutura & Qualidade:
-- Maven
-- H2 Database (ambiente local)
-- JUnit 5
-- Mockito
-- Spring Boot Starter Mail (SMTP)
+-   **API RESTful:** Interface baseada nos princípios REST para comunicação entre cliente e servidor.
+-   **Arquitetura em Camadas:** Divisão lógica que isola as responsabilidades de apresentação, negócio e persistência de dados.
+-   **Autenticação Desacoplada:** O serviço de identidade é independente das aplicações que o consomem.
+-   **Persistência de Dados:** Uso de **Spring Data JPA** e **Hibernate** para mapeamento objeto-relacional.
+-   **Segurança Centralizada:** Configuração robusta e centralizada com **Spring Security**.
 
-────────────────────────────────────────
-🔑 FUNCIONALIDADES
-────────────────────────────────────────
+> Este projeto não é um CRUD genérico, mas um serviço especializado em **segurança e gerenciamento de identidade**.
 
-Autenticação:
-- POST /api/auth/signup
-  - Cadastro de usuários
-  - Validação de dados
-  - Criptografia de senha com BCrypt
+---
 
-- POST /api/auth/signin
-  - Login
-  - Geração de token JWT
-  - Autenticação stateless
+## 🛠️ Stack Tecnológica
 
-Autorização (RBAC):
-- Papéis:
-  - ROLE_USER
-  - ROLE_ADMIN
-- Proteção de endpoints com:
-  - @PreAuthorize
-  - Configuração centralizada de segurança
+| Categoria                | Tecnologia                                                                        |
+| ------------------------ | --------------------------------------------------------------------------------- |
+| **Backend**              | Java 17 (LTS), Spring Boot 3, Spring Security, Spring Data JPA, JWT, Bean Validation |
+| **Criptografia**         | BCrypt                                                                            |
+| **Banco de Dados**       | H2 Database (ambiente de desenvolvimento)                                         |
+| **Testes**               | JUnit 5, Mockito                                                                  |
+| **Dependências & Build** | Maven                                                                             |
+| **Comunicação**          | Spring Boot Starter Mail (SMTP)                                                   |
 
-Recuperação de Senha:
-- POST /api/auth/forgot-password
-  - Envio de e-mail com token de uso único
-  - Token com tempo de expiração
+---
 
-- POST /api/auth/reset-password
-  - Validação do token
-  - Atualização segura da senha
+## 🔑 Funcionalidades
 
-Testes Automatizados:
-- Testes unitários na Service Layer
-- Uso de Mockito para mockar:
-  - Repositórios
-  - Serviços externos (e-mail)
-- Isolamento da lógica de negócio
+### 1. Autenticação
+-   `POST /api/auth/signup`: Cadastro de novos usuários com validação de dados e criptografia de senha (BCrypt).
+-   `POST /api/auth/signin`: Login de usuários e geração de um token JWT para autenticação stateless.
 
-────────────────────────────────────────
-🚀 EXECUTANDO O PROJETO LOCALMENTE
-────────────────────────────────────────
+### 2. Autorização (RBAC)
+-   **Papéis (Roles) Definidos:** `ROLE_USER` e `ROLE_ADMIN`.
+-   **Proteção de Endpoints:** Uso de anotações como `@PreAuthorize` e configurações centralizadas para restringir o acesso a recursos específicos com base no papel do usuário.
 
-Pré-requisitos:
-- Java 17
-- Maven
-- Git
-- Conta Gmail com Senha de App (SMTP)
+### 3. Recuperação de Senha Segura
+-   `POST /api/auth/forgot-password`: Inicia o fluxo de recuperação enviando um e-mail com um token de uso único e tempo de expiração.
+-   `POST /api/auth/reset-password`: Permite que o usuário defina uma nova senha após validar o token recebido.
 
-1) Clonar o repositório:
+### 4. Testes Automatizados
+-   **Testes Unitários:** Cobertura da camada de serviço (Service Layer) para validar a lógica de negócio.
+-   **Mocking de Dependências:** Uso de **Mockito** para simular o comportamento de repositórios e serviços externos (como o serviço de e-mail), garantindo testes isolados e rápidos.
+
+---
+
+## 🚀 Executando o Projeto Localmente
+
+### Pré-requisitos
+-   Java 17
+-   Maven
+-   Git
+-   Uma conta Gmail com **Senha de App** habilitada para uso com SMTP. [Saiba como gerar aqui](https://support.google.com/accounts/answer/185833).
+
+### 1️⃣ Clone o Repositório
+```bash
 git clone https://github.com/murylomarques/sistema-autenticacao-api.git
 cd sistema-autenticacao-api
+```
 
-2) Configurar variáveis de ambiente:
-Editar o arquivo src/main/resources/application.properties:
+### 2️⃣ Configure o Ambiente
+Edite o arquivo `src/main/resources/application.properties` e insira as credenciais do seu e-mail para o serviço SMTP.
 
+```properties
+# Configuração do serviço de e-mail (Gmail SMTP)
 spring.mail.host=smtp.gmail.com
 spring.mail.port=587
 spring.mail.username=seu-email@gmail.com
-spring.mail.password=sua-senha-de-app
+spring.mail.password=sua-senha-de-app-gerada-no-google
 spring.mail.properties.mail.smtp.auth=true
 spring.mail.properties.mail.smtp.starttls.enable=true
+```
 
-3) Executar a aplicação:
+### 3️⃣ Execute a Aplicação
+```bash
 mvn spring-boot:run
+```
+A API estará disponível em `http://localhost:8080`.
 
-API disponível em:
-http://localhost:8080
-
-4) Executar testes:
+### 4️⃣ Execute os Testes
+Para rodar a suíte de testes automatizados, execute o comando:
+```bash
 mvn test
+```
 
-────────────────────────────────────────
-✨ DEMONSTRAÇÃO
-────────────────────────────────────────
-Exemplo real do e-mail de recuperação de senha enviado pela aplicação:
-assets/email-recuperacao-senha.png
+---
 
-────────────────────────────────────────
-📌 ROADMAP (PRÓXIMOS PASSOS)
-────────────────────────────────────────
-- Docker + Docker Compose
-- Swagger / OpenAPI
-- Migrações com Flyway
-- Refresh Token
-- Rate Limiting
-- Deploy em Cloud (AWS / Render)
+## 📌 Roadmap (Próximas Evoluções)
 
-────────────────────────────────────────
-👨‍💻 AUTOR
-────────────────────────────────────────
-Desenvolvido por Murylo Marques
+-   [ ] **Containerização:** Adicionar `Dockerfile` e `docker-compose.yml`.
+-   [ ] **Documentação da API:** Implementar Swagger / OpenAPI para documentação interativa.
+-   [ ] **Migrações de Banco de Dados:** Utilizar Flyway para versionamento do schema.
+-   [ ] **Refresh Token:** Implementar um fluxo de renovação de tokens JWT.
+-   [ ] **Rate Limiting:** Adicionar proteção contra ataques de força bruta.
+-   [ ] **Deploy:** Publicar a aplicação em um provedor de nuvem (AWS, Render, etc.).
 
-Projeto focado em Backend Java, segurança e boas práticas corporativas.
+---
+
+## 👨‍💻 Autor
+
+Desenvolvido por **Murylo Marques**.
+
+*Este projeto foi criado com foco em demonstrar habilidades em Backend Java, segurança de APIs e boas práticas de desenvolvimento de software em um contexto corporativo.*
